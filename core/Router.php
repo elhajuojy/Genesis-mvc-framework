@@ -19,7 +19,7 @@ class Router
         $this->routes['get'][$path]=$callback;
     }
 
-    public function resolve()
+    public  function resolve()
     {
         $path =  $this->request->getPath();
         $method = $this->request->getMethod();
@@ -28,7 +28,30 @@ class Router
             echo "Not found ";
             exit();
         }
-       echo  call_user_func($callback);
+        if(is_string($callback)){
+            return $this->randerView($callback);
+        }
+        return call_user_func($callback);
     }
 
+    public function randerView($view)
+    {
+        $layoutContent = $this->layoutContent();
+        $ViewContent = $this->randerOnlyView($view);
+        return str_replace('{{content}}',$ViewContent,$layoutContent);
+    }
+
+    protected function layoutContent()
+    {
+        //nothing is output in the browser
+        ob_start();
+        include_once Application::$ROOT_DIR."/views/layouts/main.php";
+        return ob_get_clean();
+    }
+
+    protected  function randerOnlyView($view){
+        ob_start();
+        include_once Application::$ROOT_DIR."/views/$view.php";
+        return ob_get_clean();
+    }
 }
