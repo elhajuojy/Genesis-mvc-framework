@@ -23,7 +23,7 @@ class  SiteController extends  Controller {
     }
     public static function handleContent(Request $request){
         $body = $request->getBody();
-        func::dd($body);
+      //  func::dd($body);
 
         return "handling submitted data";
     }
