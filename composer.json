@@ -1,0 +1,17 @@
+{
+    "name": "elhaj/framework_php",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "elhajuojy",
+            "email": "souirimehdi311@gmail.com"
+        }
+    ],
+    "require": {
+
+    }
+}
