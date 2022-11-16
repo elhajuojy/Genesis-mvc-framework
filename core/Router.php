@@ -4,19 +4,24 @@ namespace app\core;
 
 class Router
 {
-    protected  array  $routes=[];
     public  Request $request;
+    public  Response  $response;
+    protected  array  $routes=[];
 
     /**
      * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request,Response $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
     public  function get($path,$callback){
         $this->routes['get'][$path]=$callback;
+    }
+    public  function post($path,$callback){
+        $this->routes['post'][$path]=$callback;
     }
 
     public  function resolve()
@@ -25,9 +30,8 @@ class Router
         $method = $this->request->getMethod();
         $callback = $this->routes[$method][$path]??false;
         if (!$callback){
-            Application::$app->response->setStatusCode(404);
-            echo "Not found ";
-            exit();
+            $this->response->setStatusCode(404);
+            return $this->randerView("404");
         }
         if(is_string($callback)){
             return $this->randerView($callback);
@@ -40,6 +44,11 @@ class Router
         $layoutContent = $this->layoutContent();
         $ViewContent = $this->randerOnlyView($view);
         return str_replace('{{content}}',$ViewContent,$layoutContent);
+    }
+    public function randerViewContent($viewContent)
+    {
+        $layoutContent = $this->layoutContent();
+        return str_replace('{{content}}',$viewContent,$layoutContent);
     }
 
     protected function layoutContent()
