@@ -5,7 +5,7 @@ namespace app\core;
 
 class Controller
 {
-    public function rander($view,$params=[] ){
+    public function render($view, $params=[] ){
        return Application::$app->router->randerView($view,$params);
     }
 }

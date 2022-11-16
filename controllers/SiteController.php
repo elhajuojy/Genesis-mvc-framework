@@ -5,6 +5,8 @@ namespace  app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
+use app\core\func;
+use app\core\Request;
 
 
 class  SiteController extends  Controller {
@@ -13,14 +15,16 @@ class  SiteController extends  Controller {
             'name'=>'Elhjuojy home',
             "lastname"=>'elhjuojy'
         ];
-        return $this->rander("home",$params);
-        //return "show contact form ";
+        return $this->render("home",$params);
     }
     public  function contact(){
 
-        return $this->rander("contact",[]);
+        return $this->render("contact",[]);
     }
-    public static function handleContent(){
+    public static function handleContent(Request $request){
+        $body = $request->getBody();
+        func::dd($body);
+
         return "handling submitted data";
     }
 }
