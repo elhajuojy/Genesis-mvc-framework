@@ -34,15 +34,16 @@ class Router
             return $this->randerView("404");
         }
         if(is_string($callback)){
+
             return $this->randerView($callback);
         }
         return call_user_func($callback);
     }
 
-    public function randerView($view)
+    public function randerView($view,$parms=[])
     {
         $layoutContent = $this->layoutContent();
-        $ViewContent = $this->randerOnlyView($view);
+        $ViewContent = $this->randerOnlyView($view,$parms);
         return str_replace('{{content}}',$ViewContent,$layoutContent);
     }
     public function randerViewContent($viewContent)
@@ -59,7 +60,12 @@ class Router
         return ob_get_clean();
     }
 
-    protected  function randerOnlyView($view){
+    protected  function randerOnlyView($view,$parms){
+        foreach ($parms as $key=>$value){
+            $$key = $value;
+        }
+        //var_dump($name);
+        //var_dump($lastname);
         ob_start();
         include_once Application::$ROOT_DIR."/views/$view.php";
         return ob_get_clean();
