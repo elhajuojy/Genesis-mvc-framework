@@ -4,22 +4,21 @@ namespace  app\controllers;
 
 
 use app\core\Application;
+use app\core\Controller;
 
 
-
-
-class  SiteController{
-    public  static function home(){
-        $parms =[
+class  SiteController extends  Controller {
+    public  function home(){
+        $params =[
             'name'=>'Elhjuojy home',
             "lastname"=>'elhjuojy'
         ];
-        return Application::$app->router->randerView("home",$parms);
+        return $this->rander("home",$params);
         //return "show contact form ";
     }
-    public static function contact(){
+    public  function contact(){
 
-        return Application::$app->router->randerView("contact",[]);
+        return $this->rander("contact",[]);
     }
     public static function handleContent(){
         return "handling submitted data";
